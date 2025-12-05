@@ -1,0 +1,23 @@
+name: projet_dcsd
+
+services:
+  minio:
+    container_name: minio
+    image: quay.io/minio/minio
+    env_file:
+      - path: ./config/minio.env
+    restart: always
+    ports:
+      - 9000:9000
+      - 9001:9001
+    volumes:
+      - volume_minio:/data
+    networks:
+      - network_app
+    command: ["server", "/data", "--console-address" ,":9001"]
+
+volumes:
+  volume_minio:
+
+networks:
+  network_app:
