@@ -17,7 +17,7 @@ class MinioLoader(AbstractLoader):
         """
         try:
             self.logger.info("Attempting to connect to the MinIO service.")
-            client = minio.client()
+            client = minio.get_client()
             self.logger.info("Connecting to the MinIO service.")
             self.logger.info(f"Attempting to load the file : {file_path}.")
             client.fput_object(
