@@ -6,7 +6,7 @@ services:
     image: quay.io/minio/minio
     env_file:
       - path: ./config/minio.env
-    restart: always
+    restart: unless-stopped
     ports:
       - 9000:9000
       - 9001:9001
