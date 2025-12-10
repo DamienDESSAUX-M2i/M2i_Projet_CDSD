@@ -27,4 +27,5 @@ class MinioExtractor(AbstractExtractor):
             )
             self.logger.info(f"File downloaded : {file_path}.")
         except Exception as e:
-            self.logger.error(f" Error MinIO extractor: {e}.")
+            self.logger.error(f"Error MinIO extractor: {e}.")
+            raise
