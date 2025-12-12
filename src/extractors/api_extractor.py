@@ -16,7 +16,7 @@ class APIExtractor(AbstractExtractor):
         logger: logging.Logger,
         base_url: str,
         api_key: str = None,
-        timeout: int = 10,
+        timeout: int = 30,
         retry_strategy: Retry = Retry(total=3, backoff_factor=1),
     ):
         super().__init__(logger)

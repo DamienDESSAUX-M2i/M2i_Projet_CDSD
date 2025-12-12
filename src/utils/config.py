@@ -30,8 +30,9 @@ minio_config = MinIOConfig()
 
 class APIModel(BaseModel):
     base_url: AnyHttpUrl
-    timeout: PositiveInt
-    retry: PositiveInt
+    endpoint: str
+    timeout: PositiveInt = 30
+    retry: PositiveInt = 3
 
 
 class ETLConfig(BaseSettings):
