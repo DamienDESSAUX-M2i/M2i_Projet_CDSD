@@ -8,7 +8,7 @@ from src.loaders.abstract_loader import AbstractLoader
 class CSVLoader(AbstractLoader):
     """Loader for a CSV file."""
 
-    def load_csv(self, df: pd.DataFrame, file_path: Path, **kwargs) -> None:
+    def load(self, df: pd.DataFrame, file_path: Path, **kwargs) -> None:
         """Load DataFrame to a CSV file.
 
         Args:
@@ -17,7 +17,7 @@ class CSVLoader(AbstractLoader):
         """
         try:
             self.logger.info("Attempting to load DataFrame.")
-            df.to_csv(path_or_buf=file_path, **kwargs)
+            df.to_csv(path_or_buf=file_path, index=False, **kwargs)
             self.logger.info(f"DataFrame loaded to : {file_path}.")
         except Exception as e:
             self.logger.error(f"Error CSV loader : {e}.")

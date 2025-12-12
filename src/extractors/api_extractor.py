@@ -28,12 +28,11 @@ class APIExtractor(AbstractExtractor):
     def extract(self, endpoint, params: dict[str, Any] = {}) -> requests.Response:
         """Extrait données d'une API"""
         try:
-            self.logger.info(
-                f"Attempting to extract data from {self.base_url}/{endpoint}."
-            )
+            self.logger.info(f"Attempting request {self.base_url}/{endpoint}.")
 
             headers = {}
             if self.api_key:
+                self.logger.info("API key place in the header.")
                 headers["Authorization"] = f"Bearer {self.api_key}"
 
             with requests.Session() as session:
@@ -51,7 +50,7 @@ class APIExtractor(AbstractExtractor):
             response.raise_for_status()
             data = response.json()
 
-            self.logger.info("Extraction completed.")
+            self.logger.info(f"Extraction completed : {len(data)} entries.")
             return data
         except Exception as e:
             self.logger.error(f"API Extractor Error : {e}")

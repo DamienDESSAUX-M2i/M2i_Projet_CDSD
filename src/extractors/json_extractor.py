@@ -8,14 +8,14 @@ from src.extractors.abstract_extractor import AbstractExtractor
 class JSONExtractor(AbstractExtractor):
     """Extractor for a CSV file."""
 
-    def extract(self, file_path: Path, **kwargs) -> dict[str, Any]:
+    def extract(self, file_path: Path, **kwargs) -> list[dict[str, Any]]:
         """Extract data from a JSON file.
 
         Args:
             file_path (Path): Path of the JSON file.
 
         Returns:
-            dict[str, Any]: Data extract from the JSON file.
+            list[dict[str, Any]]: Data extract from the JSON file.
         """
         try:
             self.logger.info(f"Attempting to extract data from {file_path}.")
