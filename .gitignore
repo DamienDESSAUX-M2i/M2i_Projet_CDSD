@@ -1,8 +1,10 @@
 # log
-logs/
+etl/logs/*
 
 # data
-data/
+etl/data/raw/*
+etl/data/processed/*
+etl/data/output/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

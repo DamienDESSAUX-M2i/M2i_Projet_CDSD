@@ -5,7 +5,11 @@ services:
     container_name: minio
     image: quay.io/minio/minio
     env_file:
-      - path: ./config/minio.env
+      - ./.env
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
+      - MINIO_ENDPOINT=${MINIO_ENDPOINT}
     restart: unless-stopped
     ports:
       - 9000:9000
@@ -15,6 +19,25 @@ services:
     networks:
       - network_app
     command: ["server", "/data", "--console-address" ,":9001"]
+
+  etl:
+    container_name: etl
+    build: ./etl
+    env_file:
+      - ./.env
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
+      - MINIO_ENDPOINT=${MINIO_ENDPOINT}
+      - BUCKET_BRONZE=${BUCKET_BRONZE}
+      - BUCKET_SILVER=${BUCKET_SILVER}
+      - BUCKET_GOLD=${BUCKET_GOLD}
+    ports:
+      - 5000:5000
+    volumes:
+      - ./etl:/app
+    networks:
+      - network_app
 
 volumes:
   volume_minio:

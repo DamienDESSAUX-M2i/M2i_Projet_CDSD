@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from typing import Tuple, Type
 
@@ -9,23 +10,30 @@ from pydantic_settings import (
     YamlConfigSettingsSource,
 )
 
-MINIO_ENV_PATH = Path("./config/minio.env")
-ETL_SETTINGS_PATH = Path("./config/etl_config.yaml")
+# MINIO_ENV_PATH = Path("./config/minio.env")
+ETL_SETTINGS_PATH = Path("/app/config/etl_config.yaml")
 
 
 class MinIOConfig(BaseSettings):
-    model_config = SettingsConfigDict(
-        env_file=MINIO_ENV_PATH, env_file_encoding="utf-8"
-    )
+    # model_config = SettingsConfigDict(
+    #     env_file=MINIO_ENV_PATH, env_file_encoding="utf-8"
+    # )
     MINIO_ROOT_USER: str  # SecretStr
     MINIO_ROOT_PASSWORD: str  # SecretStr
     MINIO_ENDPOINT: str
-    BUCKET_BRONZE: str = "bronze"
-    BUCKET_SILVER: str = "silver"
-    BUCKET_GOLD: str = "gold"
+    BUCKET_BRONZE: str
+    BUCKET_SILVER: str
+    BUCKET_GOLD: str
 
 
-minio_config = MinIOConfig()
+minio_config = MinIOConfig(
+    MINIO_ROOT_USER=os.getenv("MINIO_ROOT_USER"),
+    MINIO_ROOT_PASSWORD=os.getenv("MINIO_ROOT_PASSWORD"),
+    MINIO_ENDPOINT=os.getenv("MINIO_ENDPOINT"),
+    BUCKET_BRONZE=os.getenv("BUCKET_BRONZE", "bronze"),
+    BUCKET_SILVER=os.getenv("BUCKET_SILVER", "silver"),
+    BUCKET_GOLD=os.getenv("BUCKET_GOLD", "gold"),
+)
 
 
 class APIModel(BaseModel):
